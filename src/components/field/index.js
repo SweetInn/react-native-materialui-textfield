@@ -88,6 +88,7 @@ export default class TextField extends PureComponent {
     disabledLineWidth: PropTypes.number,
 
     renderAccessory: PropTypes.func,
+    renderPrefix: PropTypes.func,
 
     prefix: PropTypes.string,
     suffix: PropTypes.string,
@@ -318,6 +319,14 @@ export default class TextField extends PureComponent {
       baseColor,
       animationDuration,
     };
+    const { renderPrefix } = this.props;
+
+    if (type === 'prefix' && renderPrefix && 'function' === typeof renderPrefix) {
+      return renderPrefix({
+        style: affixTextStyle,
+        ...props
+      });
+    }
 
     return (
       <Affix style={affixTextStyle} {...props}>{affix}</Affix>
